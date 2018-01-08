@@ -1,80 +1,58 @@
-import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
-import { StackNavigator } from 'react-navigation'
+import React from 'react';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { Constants } from 'expo';
-
 import reducer from './reducers';
-import Decks from './components/Decks';
-import Deck from './components/Deck';
-import NewDeck from './components/NewDeck';
-import NewQuestion from './components/NewQuestion';
-import Quiz from './components/Quiz';
-import { indigo } from './util/colors';
-import { setLocalNotification } from './util/notifications';
+import DeckListView from './components/DeckListView';
+import IndividualDeckView from './components/IndividualDeckView';
+import AddCardView from './components/AddCardView';
+import QuizView from './components/QuizView';
+import QuizCalculations from './components/QuizCalculations';
+import CreateDeckView from './components/CreateDeckView';
+import { StackNavigator } from 'react-navigation'
+import { Constants } from 'expo';
+import { setLocalNotification } from './helpers/notifications'
 
-const defaultHeaderOptions = {
-  headerTintColor: '#FFFFFF',
-  headerStyle: {
-    backgroundColor: indigo,
-  },
-};
+function UdaciStatusBar ({backgroundColor, ...props}) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 
 const MainNavigator = StackNavigator({
   Home: {
-    screen: Decks,
-    navigationOptions: {
-      title: 'Home',
-      ...defaultHeaderOptions,
-    },
+    screen: DeckListView,
   },
-  Deck: {
-    screen: Deck,
-    path: 'deck/:title',
-    navigationOptions: ({navigation}) => ({
-      title: `Deck`,
-      ...defaultHeaderOptions,
-    }),
+  IndividualDeckView: {
+    screen: IndividualDeckView,
   },
-  NewDeck: {
-    screen: NewDeck,
-    navigationOptions: {
-      title: 'New Deck',
-      ...defaultHeaderOptions,
-    },
+  AddCardView: {
+    screen: AddCardView
   },
-  NewQuestion: {
-    screen: NewQuestion,
-    path: 'new-question/:title',
-    navigationOptions: {
-      title: 'Add Card',
-      ...defaultHeaderOptions,
-    },
+  QuizView: {
+    screen: QuizView
   },
-  Quiz: {
-    screen: Quiz,
-    path: 'quiz/:title',
-    navigationOptions: ({navigation}) => ({
-      title: `Quiz`,
-      ...defaultHeaderOptions,
-    }),
+  QuizCalculations: {
+    screen: QuizCalculations
   },
+  CreateDeckView: {
+    screen: CreateDeckView
+  }
 });
 
-export default class App extends Component {
+
+
+export default class App extends React.Component {
   componentDidMount() {
     setLocalNotification();
   }
-
   render() {
     return (
       <Provider store={createStore(reducer)}>
-        <View style={{flex: 1}}>
-          <View style={{ backgroundColor: indigo, height: Constants.statusBarHeight }}>
-            <StatusBar translucent backgroundColor='#3F51B5' barStyle='light-content'/>
-          </View>
+        <View>
+          <UdaciStatusBar backgroundColor='#292477' barStyle="light-content" />
           <MainNavigator/>
         </View>
       </Provider>

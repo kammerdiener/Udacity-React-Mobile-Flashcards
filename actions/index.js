@@ -1,41 +1,25 @@
-import {
-  RECEIVE_DECKS,
-  RECEIVE_DECK,
-  START_QUIZ,
-  INCREASE_SCORE,
-  NEXT_QUESTION,
-} from './types';
+export const RECEIVE_DECKS = 'RECEIVE_DECKS';
+export const ADD_DECK = 'ADD_DECK';
+export const UPDATE_DECK = 'UPDATE_DECK';
 
 
 export function receiveDecks(decks) {
   return {
     type: RECEIVE_DECKS,
-    decks,
-  };
+    decks
+  }
 }
 
-export function receiveDeck(deck) {
+export function addDeck(deck) {
   return {
-    type: RECEIVE_DECK,
-    deck,
-  };
+    type: ADD_DECK,
+    deck
+  }
 }
 
-export function startQuiz(quiz) {
+export function updateDeck(deck) {
   return {
-    type: START_QUIZ,
-    quiz,
-  };
-}
-
-export function increaseScore() {
-  return {
-    type: INCREASE_SCORE,
-  };
-}
-
-export function nextQuestion() {
-  return {
-    type: NEXT_QUESTION
-  };
+    type: UPDATE_DECK,
+    deck
+  }
 }

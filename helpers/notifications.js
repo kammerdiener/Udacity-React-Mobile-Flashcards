@@ -1,27 +1,35 @@
 import { AsyncStorage } from 'react-native';
 import { Notifications, Permissions } from 'expo';
-const NOTIFICATION_KEY = 'mobile-flashcards:notifications';
+const NOTIFICATION_KEY = 'Udacicards:notifications';
 
-const createNotification = () => ({
-  title: 'Study Time',
-  body: 'Its time for you to study!',
-  ios: {
-    sound: true,
-  },
-  android: {
-    sound: true,
-    priority: 'high',
-    sticky: false,
-    vibrate: true,
-  },
-});
 
-export function clearLocalNotification() {
+const clearLocalNotifications = () => {
+
+};
+
+const createNotification = () => {
+
+  return {
+    title: 'Study Time',
+    body: 'Its time for you to study!',
+    ios: {
+      sound: true
+    },
+    android: {
+      sound: true,
+      priority: 'high',
+      sticky: false,
+      vibrate: true
+    }
+  }
+};
+
+export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
-export function setLocalNotification() {
+export function setLocalNotification () {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
     .then((data) => {
