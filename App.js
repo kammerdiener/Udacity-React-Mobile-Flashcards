@@ -1,88 +1,83 @@
-import React from 'react'
-import { View, StatusBar, Text } from 'react-native'
-import styled from 'styled-components/native'
-import Decks from './src/components/decks'
-import Deck from './src/components/deck'
-import Quiz from './src/components/quiz'
-import addDeck from './src/components/addDeck'
-import addCard from './src/components/addCard'
-import { Constants } from 'expo'
-import { blue, red, redlight, white, bluelight } from './utils/colors'
-import { Font } from 'expo';
-import { Asset, AppLoading } from 'expo';
-import { StackNavigator } from 'react-navigation';
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import reducer from './src/reducers'
-import { setLocalNotification } from './utils/notifications'
+import React, { Component } from 'react';
+import { View, StatusBar } from 'react-native';
+import { StackNavigator } from 'react-navigation'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { Constants } from 'expo';
 
-export default class App extends React.Component {
+import reducer from './reducers';
+import Decks from './components/Decks';
+import Deck from './components/Deck';
+import NewDeck from './components/NewDeck';
+import NewQuestion from './components/NewQuestion';
+import Quiz from './components/Quiz';
+import { indigo } from './util/colors';
+import { setLocalNotification } from './util/notifications';
 
-  componentDidMount (){
-    setLocalNotification()
-  }
+const defaultHeaderOptions = {
+  headerTintColor: '#FFFFFF',
+  headerStyle: {
+    backgroundColor: indigo,
+  },
+};
 
-  render(){
-    return (
-      <Provider store={createStore(reducer)}>
-        <View style={{flex: 1}}>
-          <StatusBarView>
-            <StatusBar
-              translucent
-              backgroundColor={blue}
-              barStyle="light-content"
-            />
-          </StatusBarView>
-          <Stack/>
-        </View>
-      </Provider>
-    )
-  }
-
-}
-
-const Stack = StackNavigator({
-  Decks: {
+const MainNavigator = StackNavigator({
+  Home: {
     screen: Decks,
     navigationOptions: {
-      title: 'All Decks',
+      title: 'Home',
+      ...defaultHeaderOptions,
     },
   },
   Deck: {
     screen: Deck,
+    path: 'deck/:title',
     navigationOptions: ({navigation}) => ({
-      title: navigation.state.params.title,
+      title: `Deck`,
+      ...defaultHeaderOptions,
     }),
+  },
+  NewDeck: {
+    screen: NewDeck,
+    navigationOptions: {
+      title: 'New Deck',
+      ...defaultHeaderOptions,
+    },
+  },
+  NewQuestion: {
+    screen: NewQuestion,
+    path: 'new-question/:title',
+    navigationOptions: {
+      title: 'Add Card',
+      ...defaultHeaderOptions,
+    },
   },
   Quiz: {
     screen: Quiz,
+    path: 'quiz/:title',
     navigationOptions: ({navigation}) => ({
-      title: navigation.state.params.title,
+      title: `Quiz`,
+      ...defaultHeaderOptions,
     }),
   },
-  addDeck: {
-    screen: addDeck,
-    navigationOptions: {
-      title: 'Add Deck',
-    },
-  },
-  addCard: {
-    screen: addCard,
-    navigationOptions: {
-      title: 'Add Card',
-    },
-  },
-},{
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: blue,
-      },
-    }
-  }
-);
+});
 
-const StatusBarView = styled.View`
-  height: ${Constants.statusBarHeight};
-  background: ${ blue };
-`;
+export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
+  render() {
+    return (
+      <Provider store={createStore(reducer)}>
+        <View style={{flex: 1}}>
+          <View style={{ backgroundColor: indigo, height: Constants.statusBarHeight }}>
+            <StatusBar translucent backgroundColor='#3F51B5' barStyle='light-content'/>
+          </View>
+          <MainNavigator/>
+        </View>
+      </Provider>
+    );
+  }
+}
