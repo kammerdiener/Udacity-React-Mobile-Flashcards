@@ -4814,14 +4814,10 @@ react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
-react@16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0.tgz#ce7df8f1941b036f02b2cca9dbd0cb1f0e855e2d"
-  dependencies:
-    fbjs "^0.8.16"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.0"
+react@19.2.8:
+  version "19.2.8"
+  resolved "https://registry.yarnpkg.com/react/-/react-19.2.8.tgz#a80663dbb58d69c6fe3fd291d3cb324e8a7dff2d"
+  integrity sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==
 
 read-chunk@^2.0.0:
   version "2.1.0"
